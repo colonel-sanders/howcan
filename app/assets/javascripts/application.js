@@ -14,3 +14,35 @@
 //= require jquery_ujs
 //= require bootstrap
 //= require_tree .
+
+jQuery.fn.comments = function(){
+  var jComments = $( [] );
+  this.each(
+    function( intI, objNode ){
+      var objChildNode = objNode.firstChild;
+      while (objChildNode) {
+        if (objChildNode.nodeType === 8) {
+          jComments = jComments.add($(objChildNode))
+        } else if (objChildNode.nodeType === 1) {
+          jComments = jComments.add($( objChildNode ).comments());
+        }
+        objChildNode = objChildNode.nextSibling;
+      }
+    }
+  );
+  return( jComments );
+}
+
+function whocan_highlight() {
+  $("body").comments().each(function (i) {
+    if ($(this).next()) {
+      $(this).next().addClass('whocan');
+      $(this).next().attr('title', this.nodeValue);
+    }
+    true
+  });
+}
+
+function whocan_report() {
+  $('#whocan-report').show()
+}

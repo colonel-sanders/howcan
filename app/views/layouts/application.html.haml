@@ -20,4 +20,9 @@
             .span12
               = render 'layouts/messages'
               = yield
-          %footer
+    %footer
+      - if params[:whocan]
+        WhoCan?
+        %span.btn{:onclick => 'whocan_report()'} Report
+        %span.btn{:onclick => 'whocan_highlight()'} Highlight
+        #whocan-report{:style => 'display:none'}= whocan_report
